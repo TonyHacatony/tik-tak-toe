@@ -1,6 +1,8 @@
+import Game from "./game/Game";
+
 const App = () => {
   return (
-    <h1>Tik Tak Toe - Game</h1>
+    <Game></Game>
   );
 }
 
