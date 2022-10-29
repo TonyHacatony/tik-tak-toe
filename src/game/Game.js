@@ -48,15 +48,27 @@ const Game = () => {
 
     const findPreviousSign = () => isFirstTurn ? 'O' : 'X';
 
-    const createTitle = () => result.current ?
-        `Winner: ${findPreviousSign()}` :
-        `Next player: ${findSign()}`;
+    const isDraw = () => !squares.includes(null) && result.current === null;
+
+    const isWinSomeone = () => Boolean(result.current);
+
+    const isGameFinished = () => isDraw() || isWinSomeone();
+
+    const createTitle = () => {
+        if (isDraw()) {
+            return 'Draw';
+        }
+        if (isWinSomeone()) {
+            return `Winner: ${findPreviousSign()}`;
+        }
+        return `Next player: ${findSign()}`;
+    }
 
     return (
         <>
             <h2>{createTitle()}</h2>
             <Board
-                disabled={result.current}
+                disabled={isGameFinished()}
                 answer={result.current}
                 handleClick={handleClick}
                 squares={squares}
