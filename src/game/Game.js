@@ -26,7 +26,7 @@ const Game = () => {
 
         setHistory(lastHistory => {
             const newSquares = getCurrentTurn(lastHistory).slice();
-            newSquares[index] = findSign();
+            newSquares[index] = findNextStepSign();
             const winner = calculateWinner(newSquares, lines);
             if (winner) {
                 result.current = winner;
@@ -49,9 +49,9 @@ const Game = () => {
         return null;
     };
 
-    const findSign = () => step % 2 === 0 ? 'X' : 'O';
+    const findNextStepSign = () => step % 2 === 0 ? 'X' : 'O';
 
-    const findPreviousSign = () => step % 2 === 0 ? 'O' : 'X';
+    const findWinnerSign = () => history.length % 2 === 0 ? 'X' : 'O';
 
     const getCurrentTurn = (arr = history) => {
         if (arr) {
@@ -71,9 +71,9 @@ const Game = () => {
             return 'Draw';
         }
         if (isWinSomeone()) {
-            return `Winner: ${findPreviousSign()}`;
+            return `Winner: ${findWinnerSign()}`;
         }
-        return `Next player: ${findSign()}`;
+        return `Next player: ${findNextStepSign()}`;
     }
 
     return (
