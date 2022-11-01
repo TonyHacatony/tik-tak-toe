@@ -1,6 +1,7 @@
-import Board from "./Board";
+import './Game.css';
+import Board from './Board';
 import { useRef, useState } from 'react';
-import HistoryPicker from "./HistoryPicker";
+import HistoryPicker from './HistoryPicker';
 
 const Game = () => {
     const [history, setHistory] = useState([Array(9).fill(null)]);
