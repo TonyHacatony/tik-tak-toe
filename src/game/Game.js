@@ -1,9 +1,10 @@
 import Board from "./Board";
 import { useRef, useState } from 'react';
+import HistoryPicker from "./HistoryPicker";
 
 const Game = () => {
-    const [squares, setSquares] = useState(Array(9).fill(null));
-    const [isFirstTurn, setFirstTurn] = useState(true);
+    const [history, setHistory] = useState([Array(9).fill(null)]);
+    const [step, setStep] = useState(0);
     let result = useRef(null);
 
     const lines = [
@@ -18,20 +19,23 @@ const Game = () => {
     ];
 
     const handleClick = (index) => {
-        if (squares[index] !== null) {
+        if (getCurrentTurn()[index] !== null) {
             return;
         }
 
-        setSquares(previousArr => {
-            const newSquares = previousArr.slice();
+        setHistory(lastHistory => {
+            const newSquares = getCurrentTurn(lastHistory).slice();
             newSquares[index] = findSign();
             const winner = calculateWinner(newSquares, lines);
             if (winner) {
                 result.current = winner;
             }
-            return newSquares;
+            if (lastHistory.length - 1 !== step) {
+                return lastHistory.slice(0, step + 1).concat([newSquares]);
+            }
+            return lastHistory.concat([newSquares]);
         });
-        setFirstTurn(prevTurn => !prevTurn);
+        setStep(previousStep => previousStep + 1);
     };
 
     const calculateWinner = (squares, lines) => {
@@ -44,11 +48,18 @@ const Game = () => {
         return null;
     };
 
-    const findSign = () => isFirstTurn ? 'X' : 'O';
+    const findSign = () => step % 2 === 0 ? 'X' : 'O';
 
-    const findPreviousSign = () => isFirstTurn ? 'O' : 'X';
+    const findPreviousSign = () => step % 2 === 0 ? 'O' : 'X';
 
-    const isDraw = () => !squares.includes(null) && result.current === null;
+    const getCurrentTurn = (arr = history) => {
+        if (arr) {
+            return arr[step];
+        }
+        return arr;
+    };
+
+    const isDraw = () => !getCurrentTurn().includes(null) && result.current === null;
 
     const isWinSomeone = () => Boolean(result.current);
 
@@ -65,15 +76,22 @@ const Game = () => {
     }
 
     return (
-        <>
-            <h2>{createTitle()}</h2>
+        <div className="game">
             <Board
+                className="board"
                 disabled={isGameFinished()}
                 answer={result.current}
                 handleClick={handleClick}
-                squares={squares}
+                squares={getCurrentTurn()}
             />
-        </>
+            <div className="game-info">
+                <h2>{createTitle()}</h2>
+                <HistoryPicker
+                    history={history}
+                    setStep={setStep}
+                />
+            </div>
+        </div>
     );
 };
 
