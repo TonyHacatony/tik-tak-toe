@@ -1,3 +1,5 @@
+import Title from "./Title";
+
 const HistoryPicker = (props) => {
 
     const jumpTo = (step) => {
@@ -16,7 +18,10 @@ const HistoryPicker = (props) => {
     });
 
     return (
-        <ol>{moves}</ol>
+        <>
+            <Title>History</Title>
+            <ol>{moves}</ol>
+        </>
     );
 };
 

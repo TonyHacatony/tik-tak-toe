@@ -1,3 +1,5 @@
+import Title from "./Title";
+
 const GameTitle = (props) => {
 
     const createTitle = () => {
@@ -11,7 +13,7 @@ const GameTitle = (props) => {
     }
 
     return (
-        <h2>{createTitle()}</h2>
+        <Title>{createTitle()}</Title>
     );
 };
 
