@@ -2,6 +2,7 @@ import './Game.css';
 import Board from './Board';
 import { useRef, useState } from 'react';
 import HistoryPicker from './HistoryPicker';
+import GameTitle from './GameTitle';
 
 const Game = () => {
     const [history, setHistory] = useState([Array(9).fill(null)]);
@@ -66,16 +67,6 @@ const Game = () => {
 
     const isGameFinished = () => isDraw() || isWinSomeone();
 
-    const createTitle = () => {
-        if (isDraw()) {
-            return 'Draw';
-        }
-        if (isWinSomeone()) {
-            return `Winner: ${findWinnerSign()}`;
-        }
-        return `Next player: ${findNextStepSign()}`;
-    }
-
     return (
         <div className="game">
             <Board
@@ -86,7 +77,12 @@ const Game = () => {
                 squares={getCurrentTurn()}
             />
             <div className="game-info">
-                <h2>{createTitle()}</h2>
+                <GameTitle
+                    isDraw={isDraw()}
+                    isWinSomeone={isWinSomeone()}
+                    winnerSign={findWinnerSign()}
+                    nextStepSign={findNextStepSign()}
+                />
                 <HistoryPicker
                     history={history}
                     setStep={setStep}
