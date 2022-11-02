@@ -5,3 +5,7 @@
 .board, .game-info {
     margin: 20px;
 }
+
+h2 {
+    margin-top: 0px;
+}

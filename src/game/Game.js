@@ -77,6 +77,7 @@ const Game = () => {
                 squares={getCurrentTurn()}
             />
             <div className="game-info">
+                <h2>Game info</h2>
                 <GameTitle
                     isDraw={isDraw()}
                     isWinSomeone={isWinSomeone()}
