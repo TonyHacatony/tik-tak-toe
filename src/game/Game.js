@@ -2,13 +2,10 @@ import './Game.css';
 import Board from './Board';
 import { useRef, useState } from 'react';
 import HistoryPicker from './HistoryPicker';
-import GameTitle from './GameTitle';
+import GameInfo from './GameInfo';
 
 const Game = () => {
-    const [history, setHistory] = useState([Array(9).fill(null)]);
-    const [step, setStep] = useState(0);
-    let result = useRef(null);
-
+    const cellsCount = 9;
     const lines = [
         [0, 1, 2],
         [3, 4, 5],
@@ -19,6 +16,14 @@ const Game = () => {
         [0, 4, 8],
         [2, 4, 6],
     ];
+
+    const defaultHistory = [Array(cellsCount).fill(null)];
+    const defaultStep = 0
+    const defaultResult = null;
+
+    const [history, setHistory] = useState(defaultHistory);
+    const [step, setStep] = useState(defaultStep);
+    let result = useRef(defaultResult);
 
     const handleClick = (index) => {
         if (getCurrentTurn()[index] !== null) {
@@ -67,6 +72,12 @@ const Game = () => {
 
     const isGameFinished = () => isDraw() || isWinSomeone();
 
+    const restartGame = () => {
+        setHistory(defaultHistory);
+        setStep(defaultStep);
+        result.current = defaultResult;
+    };
+
     return (
         <div className="game">
             <Board
@@ -77,12 +88,12 @@ const Game = () => {
                 squares={getCurrentTurn()}
             />
             <div className="game-info">
-                <h2>Game info</h2>
-                <GameTitle
+                <GameInfo
                     isDraw={isDraw()}
                     isWinSomeone={isWinSomeone()}
                     winnerSign={findWinnerSign()}
                     nextStepSign={findNextStepSign()}
+                    restartGame={restartGame}
                 />
                 <HistoryPicker
                     history={history}

@@ -2,10 +2,22 @@
     display: flex;
 }
 
-.board, .game-info {
+.board,
+.game-info {
     margin: 20px;
 }
 
 h2 {
     margin-top: 0px;
+}
+
+button {
+    margin: 2px;
+}
+
+
+@media screen and (max-width: 768px) {
+    .game {
+        flex-direction: column;
+    }
 }
