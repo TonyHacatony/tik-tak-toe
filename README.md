@@ -1,5 +1,9 @@
 # TikTakToe
 
+In this application I learned the following points:
+- The base of how React works: working with props and state, components splitting.
+- Used some media queries from css.
+
 ## Available scripts
 
 ### `npm start`
