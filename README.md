@@ -4,6 +4,8 @@ In this application I learned the following points:
 - The base of how React works: working with props and state, components splitting.
 - Used some media queries from css.
 
+Live link: https://tik-tak-toe-green.vercel.app
+
 ## Available scripts
 
 ### `npm start`
